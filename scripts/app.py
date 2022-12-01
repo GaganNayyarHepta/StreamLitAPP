@@ -7,7 +7,7 @@ from datetime import time
 from datetime import datetime
 import psycopg2
 
-conn = psycopg2.connect("dbname='test_db' user='root' host='localhost' password='root'") 
+conn = psycopg2.connect("dbname='test_db' user='root' host='https://5432-gagannayyar-streamlitap-qip1wkopgcb.ws-us77.gitpod.io' password='root'") 
 
 cur = conn.cursor()
 
