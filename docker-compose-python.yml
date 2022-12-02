@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: app
+    build:
+      dockerfile: DockerFile.python
+      context: ./
+    volumes:
+      - ./scripts:/usr/local/code/scripts
+    ports:
+      - 8501:8501
+

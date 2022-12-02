@@ -1,5 +1,5 @@
-FROM python:3.7.3-slim
+FROM python:3.9-slim
 COPY requirements.txt requirements.txt
-RUN apt-get install python3-dev
-RUN pip3 install -r requirements.txt
-CMD ["streamlit","run", "/scripts/app.py"]
+RUN pip install -r requirements.txt
+WORKDIR /usr/local/code/scripts
+CMD ["streamlit","run", "app.py"]
