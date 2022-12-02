@@ -26,13 +26,16 @@ services:
       PGADMIN_DEFAULT_PASSWORD: root
     ports:
       - "5050:5050"
-  python:
+  app:
+    container_name: app
     build:
       dockerfile: DockerFile.python
-    ports:
-     - "8501:8501"
+      context: ./
+    depends_on:
+      - db
     volumes:
-      - ./scripts:/scripts
-    networks:
-     - app_net
+      - ./scripts:/usr/local/code/scripts
+    ports:
+      - 8501:8501
+    
 
