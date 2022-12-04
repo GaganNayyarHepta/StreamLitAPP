@@ -13,7 +13,7 @@ services:
       POSTGRES_PASSWORD: root
       POSTGRES_DB: test_db
     volumes:
-     - ./data:/var/lib/postgres/data
+     - /vol_data:/var/lib/postgres/data
     networks:
      - app_net
     ports:
