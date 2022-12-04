@@ -7,11 +7,11 @@ import psycopg2
 import plotly.graph_objects as go
 import plotly.io as pio
 
-conn = psycopg2.connect("dbname='test_db' user='root' host='pg_container' password='root'") 
+conn = psycopg2.connect("dbname='postgres' user='root' host='pg_container' password='root'") 
 
 cur = conn.cursor()
 
-fetch_query = """select * from streamlit_test1"""
+fetch_query = """select * from user_input;"""
 
 cur.execute(fetch_query)
 columns = cur.description
@@ -31,40 +31,41 @@ df = df[(df['country'] == country_choice) & (df['fund'] == fund_choice)]
 df = df[(df['portfolio'] == portfolio_choice)]
 st.write(df)
 
-
-
-line_people_quality = go.Figure()
-
-line_people_quality.add_trace(go.Scatter(x=list(df['time_stamp']), y=list(df['people_quality_score']),mode='lines+markers',text='people_quality_score',
-    line=dict(width=2,dash='dot')))
-line_people_quality.update_layout(xaxis=dict(showgrid=False),
+def line_graph(x_axis,y_axis,text,title):
+    line_chart = go.Figure()
+    line_chart.add_trace(go.Scatter(x=list(x_axis), y=list(y_axis),mode='lines+markers',text=text))
+    line_chart.update_traces(line=dict(shape='spline',color='white',width=3,dash='dot'),marker=dict(size=10))
+    line_chart.update_layout(xaxis=dict(showgrid=False),
               yaxis=dict(showgrid=False))
-line_people_quality.update_layout(xaxis=dict(showgrid=False),
-              yaxis=dict(showgrid=False),paper_bgcolor="rgb(0,0,0,0)",template='plotly_dark',title='People Quality')
-line_people_quality.update_layout(
-    autosize=False,
-    width=600,
-    height=400,)
+    line_chart.update_layout(xaxis=dict(showgrid=False),
+                yaxis=dict(showgrid=False),paper_bgcolor="rgb(0,0,0,0)",template=None,title=title)
+    line_chart.update_layout(
+        autosize=False,
+        width=800,
+        height=500)
+    
+    return line_chart
 
+overall_company_performance = line_graph(df['time_stamp'], df['company_performance'], text=df['company_performance_comment'], title= 'Overall: Company Performance')
 
-line_cyber_security = go.Figure()
-
-line_cyber_security.add_trace(go.Scatter(x=list(df['time_stamp']), y=list(df['cyber_security_score']),mode='lines+markers',text='cyber_security_score',
-    line=dict(width=2,dash='dot')))
-line_cyber_security.update_layout(xaxis=dict(showgrid=False),
-              yaxis=dict(showgrid=False))
-line_cyber_security.update_layout(xaxis=dict(showgrid=False),
-              yaxis=dict(showgrid=False),paper_bgcolor="rgb(0,0,0,0)",template='plotly_dark',title='Cyber Security')
-line_cyber_security.update_layout(
-    autosize=False,
-    width=600,
-    height=400,)
+overall_company_stronger = line_graph(df['time_stamp'], df['company_stronger'], text=df['company_stronger_comment'], title= 'Overall: Company Stronger')
 
 linegraph1, linegraph2 = st.columns([1,1])
 
 with linegraph1:
-    st.plotly_chart(line_people_quality)
+    st.plotly_chart(overall_company_performance)
 
 with linegraph2:
-    st.plotly_chart(line_cyber_security)
+    st.plotly_chart(overall_company_stronger)
 
+gap_gap_status = line_graph(df['time_stamp'], df['gap_status'], text=df['gap_status_comment'], title= 'GAP: Gap Status')
+
+gap_relative_peer = line_graph(df['time_stamp'], df['relative_peer'], text=df['relative_peer_comment'], title= 'GAP: Relative Peer')
+
+linegraph3, linegraph4 = st.columns([1,1])
+
+with linegraph3:
+    st.plotly_chart(gap_gap_status)
+
+with linegraph4:
+    st.plotly_chart(gap_relative_peer)

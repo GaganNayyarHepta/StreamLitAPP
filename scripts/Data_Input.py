@@ -18,7 +18,7 @@ my_logo = add_logo(logo_path=image_path, width=60, height=60)
 st.image(my_logo)
 st.title("PMC ASSESSMENT")
 
-conn = psycopg2.connect("dbname='test_db' user='root' host='pg_container' password='root'") 
+conn = psycopg2.connect("dbname='postgres' user='root' host='pg_container' password='root'") 
 
 cur = conn.cursor()
 
