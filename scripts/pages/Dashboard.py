@@ -5,7 +5,6 @@ from datetime import datetime
 import pandas as pd
 import psycopg2
 import plotly.graph_objects as go
-import matplotlib.pyplot as plt
 import plotly.io as pio
 
 conn = psycopg2.connect("dbname='test_db' user='root' host='pg_container' password='root'") 

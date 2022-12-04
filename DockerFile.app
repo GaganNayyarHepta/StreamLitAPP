@@ -2,4 +2,4 @@ FROM python:3.9-slim
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 WORKDIR /usr/local/code/scripts
-CMD ["streamlit","run", "app.py"]
+CMD ["streamlit","run", "Data_Input.py"]
