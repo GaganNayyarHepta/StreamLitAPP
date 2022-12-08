@@ -7,13 +7,15 @@ networks:
 services:
   db:
     container_name: pg_container
-    image: postgres
+    build:
+      dockerfile: dockerfile.db
+      context: .
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
       POSTGRES_DB: test_db
     volumes:
-     - /vol_data:/var/lib/postgres/data
+     - ./vol_data:/var/lib/postgres/data
     networks:
      - app_net
     ports:
