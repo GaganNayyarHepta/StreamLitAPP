@@ -1,0 +1,19 @@
+version: '3.8'
+
+networks:
+  app_net:
+
+
+services:
+  
+  app2:
+    container_name: app2
+    build:
+      dockerfile: dockerfile.app2
+      context: ./
+    networks:
+      - app_net
+    volumes:
+      - ./script2:/usr/local/code/scripts
+    ports:
+      - "8502:8502"
